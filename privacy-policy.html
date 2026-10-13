@@ -27,18 +27,23 @@
   <div class="hero">
     <h1>Nedir Bilelim — Gizlilik Politikası</h1>
     <p>Bu belge, Nedir Bilelim mobil uygulamasını kullanırken hangi verilerin toplandığını, nasıl kullanıldığını ve haklarınızın neler olduğunu açıklar.</p>
-    <div class="meta">Son güncelleme: 17 Eylül 2026 · Paket adı: com.thejodey.nedirbilelim</div>
+    <div class="meta">Son güncelleme: 13 Ekim 2026 · Paket adı: com.thejodey.nedirbilelim</div>
   </div>
 
   <section>
     <h2>1. Topladığımız Veriler</h2>
     <div class="card">
       <ul>
-        <li><strong>Hesap bilgileri:</strong> E-posta adresi ve kullanıcı adı</li>
-        <li><strong>Oyun verileri:</strong> Skorlarınız, doğru/yanlış istatistikleriniz, liderlik tablosu sıralamanız</li>
+        <li><strong>Hesap bilgileri:</strong> E-posta adresi, kullanıcı adı ve isteğe bağlı ad-soyad</li>
+        <li><strong>Oyun verileri:</strong> Skorlarınız, doğru/yanlış istatistikleriniz, oyun geçmişiniz, liderlik tablosu sıralamanız, günlük seriniz ve başarımlarınız</li>
+        <li><strong>Sosyal veriler:</strong> Arkadaş listeniz, arkadaşlık istekleriniz, meydan okuma maçlarınız ve arkadaşlarınıza gösterilen çevrimiçi/son görülme durumunuz</li>
         <li><strong>Profil fotoğrafı:</strong> İsteğe bağlı yüklediğiniz avatar</li>
+        <li><strong>Bildirim verileri:</strong> Size bildirim gönderebilmek için cihazınızın bildirim jetonu ve bildirim tercihleriniz</li>
+        <li><strong>Cihaz kimliği:</strong> Günün Meydan Okuması'na her cihazdan günde yalnızca bir kez katılınabilmesi için cihazın kimliği (Android'de Android ID)</li>
+        <li><strong>Soru istatistikleri:</strong> Soruların zorluğunu ölçmek için hangi sorunun doğru/yanlış/pas geçildiği; bu sayaçlar kişiyle ilişkilendirilmeden toplu olarak tutulur</li>
+        <li><strong>Soru bildirimleri:</strong> Hatalı olduğunu bildirdiğiniz sorular</li>
         <li><strong>Cihaz/reklam verileri:</strong> Google AdMob'un reklam gösterimi için topladığı bilgiler</li>
-        <li><strong>Uygulama tercihleri:</strong> Ses ve tema ayarları (cihazda yerel)</li>
+        <li><strong>Uygulama tercihleri:</strong> Ses, tema ve ipucu hakkı gibi ayarlar (cihazda yerel)</li>
       </ul>
     </div>
     <p>Uygulama mikrofon kaydı ve konum verisi toplamaz.</p>
@@ -48,8 +53,11 @@
     <h2>2. Verileri Nasıl Kullanıyoruz</h2>
     <ul>
       <li>Hesap oluşturma, giriş ve oturum güvenliği için</li>
-      <li>Skor kaydı ve liderlik tablolarının güncellenmesi için</li>
-      <li>1v1 düello eşleştirme ve canlı skor senkronizasyonu için</li>
+      <li>Skor kaydı, liderlik tabloları ve Günün Meydan Okuması sıralaması için</li>
+      <li>Arkadaş ekleme, arkadaşa meydan okuma ve maç sonuçlarının gösterilmesi için</li>
+      <li>Bildirim göndermek için: size meydan okunduğunda, meydan okuma sonuçlandığında, arkadaşlık isteği geldiğinde ve günlük hatırlatma olarak. Her bildirim türünü uygulamada <strong>Ayarlar → Bildirimler</strong> bölümünden kapatabilirsiniz.</li>
+      <li>Günün Meydan Okuması'nın adil olması (kişi ve cihaz başına günde bir katılım) için</li>
+      <li>Hatalı ya da fazla zor soruları tespit edip düzeltmek için</li>
       <li>Reklam gösterimi ve ölçümü için</li>
       <li>Hata tespiti ve iyileştirme için</li>
     </ul>
@@ -58,20 +66,28 @@
 
   <section>
     <h2>3. Üçüncü Taraf Hizmetler</h2>
-    <p>Google Firebase (Auth, Firestore, Realtime Database), Google AdMob, Cloudinary (görsel barındırma).</p>
+    <ul>
+      <li><strong>Google Firebase</strong> (Authentication, Firestore, Realtime Database, Cloud Messaging): hesap, oyun verileri ve bildirim altyapısı</li>
+      <li><strong>Google AdMob:</strong> reklam gösterimi</li>
+      <li><strong>Expo Push Notification Service:</strong> bildirimlerin cihazınıza iletilmesi</li>
+      <li><strong>Vercel:</strong> bildirim gönderme, şifre sıfırlama ve hesap silme gibi sunucu işlemleri</li>
+      <li><strong>Resend:</strong> şifre sıfırlama e-postalarının gönderimi</li>
+      <li><strong>Cloudinary:</strong> profil fotoğraflarının barındırılması</li>
+    </ul>
   </section>
 
   <section>
     <h2>4. Reklamlar</h2>
-    <p>Uygulama Google AdMob aracılığıyla banner ve geçiş reklamları gösterir; sıklığı kullanıcı deneyimini korumak için sınırlandırılmıştır. AEA/İngiltere kullanıcılarına Google'ın UMP onay formu gösterilir.</p>
+    <p>Uygulama Google AdMob aracılığıyla banner, oyun sonunda geçiş ve isteğe bağlı ödüllü reklamlar (örneğin ipucu hakkı kazanmak için) gösterir; oyun sırasında reklam gösterilmez ve reklam sıklığı kullanıcı deneyimini korumak için sınırlandırılmıştır. AEA, İngiltere ve İsviçre'deki kullanıcılara Google'ın onay formu gösterilir; bu kullanıcılar verdikleri izni uygulamada <strong>Ayarlar → Gizlilik ve Reklam İzinleri</strong> bölümünden istedikleri zaman değiştirebilir.</p>
   </section>
 
   <section>
     <h2>5. Veri Güvenliği</h2>
     <ul>
       <li>Şifreniz Firebase Authentication tarafından şifrelenir</li>
-      <li>"Beni Hatırla" bilgileri cihazın donanım destekli güvenli deposunda (Android Keystore) tutulur</li>
+      <li>"Beni Hatırla" bilgileri cihazın donanım destekli güvenli deposunda (Android Keystore) tutulur; web sürümünde şifre saklanmaz</li>
       <li>Veri iletimi HTTPS/TLS ile şifrelenir</li>
+      <li>Verilerinize erişim, Firestore güvenlik kurallarıyla yalnızca sizin (ve gerekiyorsa arkadaşlarınızın) görmesi gerekenlerle sınırlandırılır</li>
     </ul>
   </section>
 
@@ -82,16 +98,28 @@
 
   <section>
     <h2>7. Haklarınız (KVKK / GDPR)</h2>
-    <p>6698 sayılı KVKK ve ilgili durumlarda GDPR kapsamında: verilerinize erişim, düzeltme, silme talep etme ve işlemeye itiraz etme haklarına sahipsiniz.</p>
+    <p>6698 sayılı KVKK ve ilgili durumlarda GDPR kapsamında: verilerinize erişim, düzeltme, silme talep etme ve işlemeye itiraz etme haklarına sahipsiniz. Bu haklarınızı kullanmak için <a href="mailto:info@nedirbilelim.com">info@nedirbilelim.com</a> adresine yazabilirsiniz.</p>
   </section>
 
   <section>
     <h2>8. Veri Saklama ve Hesap Silme</h2>
-    <p>Hesap ve verilerinizin silinmesini talep etmek için <a href="/account-deletion.html">Hesap Silme</a> sayfasına bakın.</p>
+    <p>Verileriniz hesabınız açık olduğu sürece saklanır. Hesabınızı uygulamada <strong>Profil → Hesabımı Sil</strong> ile silebilirsiniz:</p>
+    <ul>
+      <li>Hesabınız hemen kapatılır; profiliniz, puanlarınız ve arkadaşlıklarınız diğer kullanıcılara gösterilmez.</li>
+      <li>30 gün içinde bize yazarak hesabınızı geri açtırabilirsiniz; bu süre boyunca verileriniz yalnızca bu amaçla saklanır.</li>
+      <li>30 günün sonunda hesabınız ve kişisel verileriniz kalıcı olarak silinir.</li>
+      <li>Hesabın silindiği, geri açıldığı ve kalıcı olarak silindiği tarihler, kişisel veri içermeyen bir kayıt olarak tutulur.</li>
+    </ul>
+    <p>Ayrıntılar ve uygulamaya erişemeyenler için e-posta ile talep yolu: <a href="/account-deletion.html">Hesap Silme</a> sayfası.</p>
   </section>
 
   <section>
-    <h2>9. İletişim</h2>
+    <h2>9. Değişiklikler</h2>
+    <p>Bu politikayı güncellediğimizde yukarıdaki "Son güncelleme" tarihini değiştiririz. Önemli değişiklikleri uygulama içinden de duyurabiliriz.</p>
+  </section>
+
+  <section>
+    <h2>10. İletişim</h2>
     <p>Bünyamin Bayraktar — <a href="mailto:info@nedirbilelim.com">info@nedirbilelim.com</a></p>
   </section>
 

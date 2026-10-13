@@ -15,8 +15,11 @@
   section{margin-bottom:30px;}
   section h2{font-family:'Fredoka',sans-serif; font-weight:600; font-size:20px; margin:0 0 10px 0;}
   section p, section li{font-size:15px; line-height:1.7; color:#4b4763;}
-  section ul{padding-left:20px;}
+  section ul, section ol{padding-left:20px;}
   .card{background:#fff; border:1px solid #e7e5f3; border-radius:16px; padding:18px 20px;}
+  .card p:first-child{margin-top:0;}
+  .card p:last-child{margin-bottom:0;}
+  .card ol, .card ul{margin:0;}
   a{color:#7c3aed;}
   footer{margin-top:40px; text-align:center; color:#716d8a; font-size:13px;}
 </style>
@@ -24,34 +27,57 @@
 <body>
 <div class="wrap">
   <div class="hero">
-    <h1>Nedir Bilelim — Hesap Silme Talebi</h1>
-    <p>Nedir Bilelim uygulamasındaki hesabınızı ve ilişkili verilerinizi silmek istiyorsanız aşağıdaki adımları izleyin.</p>
+    <h1>Nedir Bilelim — Hesap Silme</h1>
+    <p>Nedir Bilelim uygulamasındaki hesabınızı ve ilişkili verilerinizi nasıl silebileceğinizi açıklar.</p>
   </div>
 
   <section>
-    <h2>Nasıl Talep Edilir</h2>
+    <h2>1. Uygulamadan Silme (Önerilen)</h2>
     <div class="card">
-      <p>Uygulamaya kayıt olurken kullandığınız e-posta adresinizden, konu satırına <strong>"Hesap Silme Talebi"</strong> yazarak <a href="mailto:info@nedirbilelim.com">info@nedirbilelim.com</a> adresine e-posta gönderin. Talebinizde kayıtlı kullanıcı adınızı da belirtin.</p>
+      <ol>
+        <li>Nedir Bilelim uygulamasını açın ve hesabınızla giriş yapın.</li>
+        <li>Ana menüde sağ üstteki profil fotoğrafınıza dokunarak <strong>Profil</strong> ekranına gidin.</li>
+        <li>Sayfanın en altındaki <strong>Hesabımı Sil</strong> bağlantısına dokunun.</li>
+        <li>Onaylamak için şifrenizi girip <strong>Hesabımı Kalıcı Olarak Sil</strong>'e dokunun.</li>
+      </ol>
     </div>
+  </section>
+
+  <section>
+    <h2>2. E-posta ile Talep</h2>
+    <div class="card">
+      <p>Uygulamaya erişemiyorsanız, kayıt olurken kullandığınız e-posta adresinizden, konu satırına <strong>"Hesap Silme Talebi"</strong> yazarak <a href="mailto:info@nedirbilelim.com?subject=Hesap%20Silme%20Talebi">info@nedirbilelim.com</a> adresine e-posta gönderin. Talebinizde kayıtlı kullanıcı adınızı da belirtin. Talebiniz doğrulandıktan sonra en geç 30 gün içinde işleme alınır.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Silme Nasıl İşler?</h2>
+    <ul>
+      <li><strong>Hemen:</strong> Hesabınız kapatılır ve artık giriş yapılamaz. Profiliniz, puanlarınız ve arkadaşlıklarınız sıralamalardan ve diğer oyuncuların listelerinden kaldırılır.</li>
+      <li><strong>30 gün boyunca:</strong> Fikrinizi değiştirirseniz <a href="mailto:info@nedirbilelim.com?subject=Hesap%20Geri%20A%C3%A7ma%20Talebi">info@nedirbilelim.com</a> adresine yazarak hesabınızı geri açtırabilirsiniz. Bu süre boyunca verileriniz yalnızca bu amaçla saklanır, başka bir amaçla kullanılmaz ve kimseye gösterilmez.</li>
+      <li><strong>30 günün sonunda:</strong> Hesabınız ve aşağıdaki veriler kalıcı olarak silinir; bu işlem geri alınamaz.</li>
+    </ul>
   </section>
 
   <section>
     <h2>Silinen Veriler</h2>
     <ul>
-      <li>Hesap bilgileri: e-posta adresi, kullanıcı adı, şifre</li>
-      <li>Oyun verileri: skorlarınız, istatistikleriniz, liderlik tablosu kayıtlarınız</li>
-      <li>Profil fotoğrafınız (varsa)</li>
+      <li>Hesap bilgileri: e-posta adresi, kullanıcı adı, ad-soyad, şifre</li>
+      <li>Profil fotoğrafı bağlantısı</li>
+      <li>Oyun verileri: skorlarınız, istatistikleriniz, oyun geçmişiniz, liderlik tablosu kayıtlarınız, seri ve başarımlarınız</li>
+      <li>Arkadaşlıklar ve arkadaşlık istekleri</li>
+      <li>Bildirim ayarları ve bildirim jetonu</li>
     </ul>
   </section>
 
   <section>
-    <h2>İşlem Süresi</h2>
-    <p>Talebiniz doğrulandıktan sonra en geç <strong>30 gün</strong> içinde tamamlanır ve verileriniz kalıcı olarak silinir.</p>
-  </section>
-
-  <section>
-    <h2>Saklanabilecek Veriler</h2>
-    <p>Yasal yükümlülükler, güvenlik veya sahtekarlık önleme amacıyla bazı sınırlı veriler yasal olarak gerekli süre kadar saklanabilir.</p>
+    <h2>Saklanabilecek Sınırlı Veriler</h2>
+    <ul>
+      <li>Geçmiş meydan okuma maçları, karşı oyuncunun maç geçmişinin bir parçası olduğu için saklanabilir.</li>
+      <li>Günün Meydan Okuması'na katılım kayıtları (yalnızca anonim kullanıcı kimliği, cihaz kimliği ve tarih) kötüye kullanımı önlemek amacıyla saklanabilir.</li>
+      <li>Hesabın silindiği, geri açıldığı ve kalıcı olarak silindiği tarihler, e-posta ya da başka kişisel veri içermeyen bir kayıt olarak tutulur.</li>
+      <li>Yasal yükümlülükler, güvenlik veya sahtekârlık önleme amacıyla gerekli olabilecek diğer sınırlı veriler, yasal olarak gerekli süre kadar saklanabilir.</li>
+    </ul>
   </section>
 
   <section>
