@@ -35,7 +35,7 @@
     <p id="lead">Arkadaşın seni Nedir Bilelim'de yarışmaya çağırıyor!</p>
 
     <a class="btn primary" id="openApp" href="#">Uygulamada Aç</a>
-    <a class="btn secondary" id="getApp" href="https://play.google.com/store/apps/details?id=com.thejodey.nedirbilelim">Google Play'den İndir</a>
+    <a class="btn secondary" id="getApp" href="https://play.google.com/store/apps/details?id=com.thejodey.nedirbilelim&amp;referrer=utm_source%3Ddavet%26utm_medium%3Darkadas">Google Play'den İndir</a>
 
     <p class="hint" id="hint">
       Uygulama yüklü değilse önce indir, sonra bu sayfaya dönüp <b>Uygulamada Aç</b>'a dokun.
@@ -45,7 +45,8 @@
 <script>
 (function () {
   var PACKAGE = 'com.thejodey.nedirbilelim';
-  var PLAY_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
+  // referrer: davetle gelen kurulumlar Admin Paneli raporlarında 'davet' kaynağı olarak görünür
+  var PLAY_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE + '&referrer=' + encodeURIComponent('utm_source=davet&utm_medium=arkadas');
   var params = new URLSearchParams(location.search);
   var username = (params.get('u') || '').trim();
   var valid = /^[A-Za-z0-9_.\-çğıöşüÇĞİÖŞÜ]{1,30}$/.test(username);
