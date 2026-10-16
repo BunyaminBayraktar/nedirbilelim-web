@@ -25,6 +25,9 @@
     font-family:'Fredoka',sans-serif; font-weight:600; font-size:18px;
     box-shadow:0 14px 30px rgba(91,33,182,0.45);
   }
+  .ctas{display:flex; flex-direction:column; gap:12px; width:100%; max-width:340px;}
+  a.cta.play{background:linear-gradient(90deg,#16a34a,#0ea5e9);}
+  p.small{font-size:14px; color:#a5b4fc; margin:14px 0 0;}
   footer{margin-top:56px; font-size:13px; color:#716d8a;}
   footer a{color:#a5b4fc;}
 </style>
@@ -32,7 +35,11 @@
 <body>
   <h1>Nedir Bilelim</h1>
   <p>Harfini seç, ipucunu çöz, arkadaşlarınla yarış! 5000'in üzerinde soruyla kelime bilgi yarışması.</p>
-  <a class="cta" href="https://play.google.com/store/apps/details?id=com.thejodey.nedirbilelim">Google Play'de İndir</a>
+  <div class="ctas">
+    <a class="cta play" href="/gunluk">🧠 Günün Bulmacasını Oyna</a>
+    <a class="cta" href="https://play.google.com/store/apps/details?id=com.thejodey.nedirbilelim&amp;referrer=utm_source%3Dweb%26utm_medium%3Danasayfa">Google Play'de İndir</a>
+  </div>
+  <p class="small">Kurulum gerekmez: günün bulmacasını tarayıcında hemen oyna.</p>
   <footer>
     <a href="/privacy-policy.html">Gizlilik Politikası</a> · <a href="/account-deletion.html">Hesap Silme</a>
   </footer>

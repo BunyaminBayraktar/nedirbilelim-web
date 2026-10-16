@@ -25,6 +25,7 @@
   .primary{background:linear-gradient(90deg,#7c3aed,#0ea5e9); color:#fff;}
   .secondary{background:#f5f3ff; color:#5b21b6; border:1.5px solid #ddd6fe;}
   .hint{font-size:13px; color:#716d8a; margin-top:20px; line-height:1.5;}
+  .gift{background:#fef3c7; color:#92400e; border-radius:12px; padding:10px 12px; font-size:14px; margin:-6px 0 8px;}
   .code{display:inline-block; background:#f5f3ff; color:#5b21b6; font-weight:800; padding:2px 8px; border-radius:6px;}
 </style>
 </head>
@@ -33,6 +34,7 @@
     <div class="emoji">🧠</div>
     <h1>Nedir Bilelim</h1>
     <p id="lead">Arkadaşın seni Nedir Bilelim'de yarışmaya çağırıyor!</p>
+    <p class="gift">🎁 Bu davetle üye olursan <b>3 ipucu</b> hediye!</p>
 
     <a class="btn primary" id="openApp" href="#">Uygulamada Aç</a>
     <a class="btn secondary" id="getApp" href="https://play.google.com/store/apps/details?id=com.thejodey.nedirbilelim&amp;referrer=utm_source%3Ddavet%26utm_medium%3Darkadas">Google Play'den İndir</a>
@@ -58,6 +60,12 @@
       : 'nedirbilelim://';
     return;
   }
+
+  // Davet edenin adı kurulum referrer'ına da eklenir (utm_content): uygulama mağazadan kurulup
+  // bu sayfaya dönülmese bile üyelikte davet edene ödül verebilir
+  PLAY_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE + '&referrer='
+    + encodeURIComponent('utm_source=davet&utm_medium=arkadas&utm_content=' + encodeURIComponent(username));
+  document.getElementById('getApp').href = PLAY_URL;
 
   // Metne kullanıcı adını güvenli şekilde (textContent) yerleştir
   var lead = document.getElementById('lead');

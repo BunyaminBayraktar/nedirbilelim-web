@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nedir Bilelim — Hemen Oyna</title>
+<meta name="description" content="A'dan Z'ye her harf için bir soru. Sen kaç tanesini bilirsin? Nedir Bilelim Google Play'de ücretsiz.">
+<meta property="og:title" content="Nedir Bilelim — Sen kaç bilirsin?">
+<meta property="og:description" content="A'dan Z'ye her harf için bir soru. Arkadaşlarınla yarış, günün meydan okumasında sıralamaya gir.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap');
+  *{box-sizing:border-box;}
+  body{margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+    font-family:'Nunito Sans',sans-serif; color:#1e1b2e;
+    background:linear-gradient(135deg,#0E0F30,#7c3aed);}
+  .card{background:#fff; border-radius:24px; padding:32px 24px; width:100%; max-width:420px; text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);}
+  .emoji{font-size:52px; line-height:1;}
+  h1{font-family:'Fredoka',sans-serif; font-weight:700; font-size:28px; margin:12px 0 8px;
+    background:linear-gradient(90deg,#7c3aed,#0ea5e9); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  p{color:#4b4763; font-size:15px; line-height:1.6; margin:0 0 20px;}
+  .btn{display:block; text-decoration:none; font-family:'Fredoka',sans-serif; font-weight:600; font-size:17px;
+    padding:14px 18px; border-radius:14px; margin-top:12px;
+    background:linear-gradient(90deg,#7c3aed,#0ea5e9); color:#fff;}
+  .hint{font-size:13px; color:#716d8a; margin-top:18px;}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="emoji">🧠</div>
+    <h1>Sen kaç bilirsin?</h1>
+    <p>A'dan Z'ye her harf için bir soru. Arkadaşlarınla yarış, günün meydan okumasında sıralamaya gir.</p>
+    <a class="btn" id="getApp" href="https://play.google.com/store/apps/details?id=com.thejodey.nedirbilelim&amp;referrer=utm_source%3Dpaylasim%26utm_medium%3Dsonuc_karti">Google Play'den Ücretsiz İndir</a>
+    <p class="hint">Yönlendiriliyorsun...</p>
+  </div>
+
+<script>
+(function () {
+  // Sonuç kartındaki adres. Kurulumlar Admin Paneli raporlarında "paylasim" kaynağıyla görünür.
+  // ?k=instagram gibi bir parametre verilirse kaynak o olur (kendi gönderilerin için).
+  var params = new URLSearchParams(location.search);
+  var source = (params.get('k') || 'paylasim').toLowerCase().replace(/[^a-z0-9_\-]/g, '').slice(0, 30) || 'paylasim';
+  var campaign = (params.get('c') || '').toLowerCase().replace(/[^a-z0-9_\-]/g, '').slice(0, 40);
+  var referrer = 'utm_source=' + source + '&utm_medium=' + (source === 'paylasim' ? 'sonuc_karti' : 'sosyal')
+    + (campaign ? '&utm_campaign=' + campaign : '');
+  var url = 'https://play.google.com/store/apps/details?id=com.thejodey.nedirbilelim&referrer=' + encodeURIComponent(referrer);
+  document.getElementById('getApp').href = url;
+  setTimeout(function () { location.replace(url); }, 600);
+})();
+</script>
+</body>
+</html>

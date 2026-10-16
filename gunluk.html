@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nedir Bilelim — Günün Bulmacası</title>
+<meta name="description" content="Her gün yeni bir bulmaca: A'dan Z'ye her harf için bir soru, 4 dakika. Kurulum gerekmez, hemen oyna. Sen kaç bilirsin?">
+<meta property="og:title" content="Nedir Bilelim — Günün Bulmacası">
+<meta property="og:description" content="A'dan Z'ye 25 soru, 4 dakika. Sen kaç bilirsin? 🧠">
+<meta property="og:url" content="https://nedirbilelim.com/gunluk">
+<meta name="theme-color" content="#0E0F30">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Nunito+Sans:wght@400;600;700;800;900&display=swap');
+  :root{
+    --bg1:#0E0F30; --bg2:#2e1a7a; --bg3:#7c3aed;
+    --card:#ffffff; --text:#1e1b2e; --sub:#5b5675; --muted:#8a85a3;
+    --brand:#7c3aed; --brand2:#0ea5e9;
+    --ok:#22c55e; --bad:#ef4444; --pass:#f59e0b; --empty:#e9e5f5; --emptyText:#6b6587;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{min-height:100vh; font-family:'Nunito Sans',system-ui,sans-serif; color:var(--text);
+    background:linear-gradient(160deg,var(--bg1),var(--bg2) 55%,var(--bg3)); background-attachment:fixed;
+    display:flex; justify-content:center; padding:16px 16px calc(24px + env(safe-area-inset-bottom));}
+  .app{width:100%; max-width:440px;}
+  header{display:flex; align-items:center; justify-content:space-between; color:#fff; margin:4px 2px 14px;}
+  .brand{font-family:'Fredoka',sans-serif; font-weight:700; font-size:22px; text-decoration:none;
+    background:linear-gradient(90deg,#c084fc,#38bdf8); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .date{font-size:13px; font-weight:700; color:#e9d5ff;}
+  .card{background:var(--card); border-radius:22px; padding:22px 18px; box-shadow:0 20px 50px rgba(0,0,0,0.3);}
+  h1{font-family:'Fredoka',sans-serif; font-weight:700; font-size:26px; margin:6px 0 8px; text-align:center;}
+  p{line-height:1.6; color:var(--sub); margin:0 0 12px;}
+  .center{text-align:center;}
+  .special{display:flex; gap:12px; align-items:center; background:#dc2626; color:#fff; border-radius:14px; padding:12px 14px; margin-bottom:14px;}
+  .special .e{font-size:28px;}
+  .special b{display:block; font-size:16px;} .special span{font-size:13px; opacity:.92;}
+  .rules{list-style:none; padding:0; margin:14px 0 18px; display:grid; gap:8px;}
+  .rules li{background:#f5f3ff; border-radius:12px; padding:10px 12px; font-size:14px; color:#3b3555;}
+  .btn{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; border:none; cursor:pointer; text-decoration:none;
+    font-family:'Fredoka',sans-serif; font-weight:600; font-size:17px; padding:14px 18px; border-radius:14px; color:#fff;
+    background:linear-gradient(90deg,var(--brand),var(--brand2));}
+  .btn.green{background:#22c55e;}
+  .btn.ghost{background:#f1effa; color:#4c1d95;}
+  .btn:disabled{opacity:.6; cursor:not-allowed;}
+  .btn + .btn{margin-top:10px;}
+  .hidden{display:none !important;}
+
+  /* Oyun */
+  .hud{display:flex; justify-content:space-between; align-items:center; color:#fff; font-weight:800; margin:0 4px 10px;}
+  .pill{background:rgba(255,255,255,0.14); border-radius:999px; padding:6px 12px; font-size:14px;}
+  .pill.warn{background:#ef4444;}
+  .ringWrap{position:relative; width:min(86vw,360px); aspect-ratio:1; margin:0 auto 12px;}
+  .dot{position:absolute; width:30px; height:30px; margin:-15px 0 0 -15px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-weight:900; font-size:13px; color:#fff; background:rgba(255,255,255,0.18); transition:transform .2s, background .2s;}
+  .dot.ok{background:var(--ok);} .dot.bad{background:var(--bad);} .dot.pass{background:var(--pass);}
+  .dot.cur{transform:scale(1.35); background:#fff; color:var(--brand); box-shadow:0 0 0 3px rgba(255,255,255,0.35);}
+  .ringCenter{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; pointer-events:none;}
+  .bigLetter{font-family:'Fredoka',sans-serif; font-size:64px; line-height:1; font-weight:700;}
+  .scoreSmall{font-size:14px; font-weight:800; color:#e9d5ff; margin-top:4px;}
+  .qcard{background:#fff; border-radius:18px; padding:16px; box-shadow:0 12px 30px rgba(0,0,0,0.25);}
+  .qhint{font-size:12px; font-weight:800; letter-spacing:.5px; color:var(--brand); text-transform:uppercase;}
+  .qtext{font-size:17px; font-weight:700; margin:6px 0 12px; min-height:48px;}
+  .answerRow{display:flex; gap:8px;}
+  .answerRow input{flex:1; min-width:0; font-size:17px; padding:12px; border-radius:12px; border:2px solid #ddd6fe; font-family:inherit; color:var(--text);}
+  .answerRow input:focus{outline:none; border-color:var(--brand);}
+  .answerRow .btn{width:auto; padding:12px 16px; font-size:16px;}
+  .passBtn{background:#f59e0b !important;}
+  .flash{height:22px; font-size:14px; font-weight:800; text-align:center; margin-top:8px;}
+  .flash.ok{color:#16a34a;} .flash.bad{color:#dc2626;} .flash.close{color:#b45309;}
+
+  /* Sonuç */
+  .resultScore{font-family:'Fredoka',sans-serif; font-size:64px; font-weight:700; text-align:center; line-height:1; color:var(--brand); margin-top:6px;}
+  .resultSub{text-align:center; font-weight:800; color:var(--sub); margin:4px 0 14px;}
+  .grid{display:grid; grid-template-columns:repeat(5,1fr); gap:6px; max-width:260px; margin:0 auto 16px;}
+  .cell{aspect-ratio:1; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; color:#fff; background:#cbd5e1;}
+  .cell.ok{background:var(--ok);} .cell.bad{background:var(--bad);} .cell.pass{background:var(--pass);}
+  .appBox{background:linear-gradient(135deg,#f5f3ff,#e0f2fe); border-radius:16px; padding:16px; margin:16px 0 4px; text-align:center;}
+  .appBox b{display:block; font-size:16px; margin-bottom:4px;}
+  .appBox p{font-size:14px; margin-bottom:12px;}
+  details{margin-top:14px;}
+  summary{cursor:pointer; font-weight:800; color:var(--brand);}
+  .rev{border-bottom:1px solid #eee; padding:8px 0; font-size:14px;}
+  .rev .l{font-weight:900; color:var(--brand); margin-right:6px;}
+  .rev .a{color:#16a34a; font-weight:800;} .rev .y{color:var(--muted);}
+  .countdown{text-align:center; font-size:13px; color:var(--muted); margin-top:12px;}
+  .streak{text-align:center; font-weight:800; color:#ea580c; margin-bottom:6px;}
+  footer{color:rgba(255,255,255,0.7); font-size:12px; text-align:center; margin-top:16px;}
+  footer a{color:#e9d5ff;}
+  .loading{color:#fff; text-align:center; padding:40px 0; font-weight:700;}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <a class="brand" href="/">Nedir Bilelim</a>
+    <span class="date" id="dateLabel"></span>
+  </header>
+
+  <div id="loading" class="loading">Günün bulmacası yükleniyor...</div>
+
+  <!-- Giriş -->
+  <section id="intro" class="card hidden">
+    <div id="specialIntro"></div>
+    <h1>Günün Bulmacası</h1>
+    <p class="center">Bugün herkes aynı soruları çözüyor. Sen kaç bilirsin?</p>
+    <ul class="rules">
+      <li>🔤 Her harf için bir soru; cevap o harfle başlar.</li>
+      <li>⏱️ 4 dakikan var. Doğru +10, yanlış −5 puan.</li>
+      <li>⏭️ Bilemediğini pas geç, en sonda tekrar gelir.</li>
+      <li>🗓️ Günde bir kez oynanır, yarın yeni sorular!</li>
+    </ul>
+    <div class="streak" id="introStreak"></div>
+    <button class="btn" id="startBtn">Başla</button>
+  </section>
+
+  <!-- Oyun -->
+  <section id="game" class="hidden">
+    <div class="hud">
+      <span class="pill" id="timer">4:00</span>
+      <span class="pill" id="progress">0/25</span>
+    </div>
+    <div class="ringWrap" id="ring">
+      <div class="ringCenter">
+        <div class="bigLetter" id="bigLetter">A</div>
+        <div class="scoreSmall" id="scoreSmall">0 puan</div>
+      </div>
+    </div>
+    <div class="qcard">
+      <div class="qhint" id="qhint">A ile başlar</div>
+      <div class="qtext" id="qtext"></div>
+      <form class="answerRow" id="answerForm" autocomplete="off">
+        <input id="answer" type="text" inputmode="text" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="Cevabın" aria-label="Cevabın">
+        <button class="btn" type="submit">Cevapla</button>
+      </form>
+      <button class="btn passBtn" id="passBtn" type="button" style="margin-top:10px;">Pas</button>
+      <div class="flash" id="flash" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- Sonuç -->
+  <section id="result" class="card hidden">
+    <div id="specialResult"></div>
+    <div class="streak" id="resultStreak"></div>
+    <div class="resultScore" id="resultScore">0</div>
+    <div class="resultSub" id="resultSub">puan</div>
+    <div class="grid" id="resultGrid"></div>
+    <button class="btn green" id="shareBtn">Sonucu Paylaş</button>
+    <div class="appBox">
+      <b>Yarın da oyna, serini kaybetme 🔥</b>
+      <p>Uygulamada günün sıralaması, arkadaşlarına meydan okuma, Hızlı Mod ve binlerce soru var.</p>
+      <a class="btn" id="storeBtn" href="#">Google Play'den Ücretsiz İndir</a>
+    </div>
+    <details>
+      <summary>Soruları ve cevapları gör</summary>
+      <div id="review"></div>
+    </details>
+    <div class="countdown" id="countdown"></div>
+  </section>
+
+  <section id="errorBox" class="card hidden">
+    <h1>😕</h1>
+    <p class="center" id="errorText">Bulmaca yüklenemedi.</p>
+    <button class="btn" onclick="location.reload()">Tekrar Dene</button>
+  </section>
+
+  <footer>
+    <a href="/">nedirbilelim.com</a> · <a href="/privacy-policy.html">Gizlilik</a>
+  </footer>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var API = 'https://nedir-bilelim-prod.vercel.app/api/daily';
+  var STORE = 'https://play.google.com/store/apps/details?id=com.thejodey.nedirbilelim&referrer='
+    + encodeURIComponent('utm_source=web&utm_medium=gunluk');
+  var PAGE_URL = 'https://nedirbilelim.com/gunluk';
+  var DURATION = 240;
+  var ORDER = ['A','B','C','Ç','D','E','F','G','H','I','J','K','L','M','N','O','P','R','S','Ş','T','U','V','Y','Z'];
+  var GROUP = { 'İ': 'I', 'Ö': 'O', 'Ü': 'U' };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+  var now = new Date();
+  var DAY = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+  var STATE_KEY = 'nb_gunluk_' + DAY;
+  var STREAK_KEY = 'nb_gunluk_streak';
+
+  var store = {
+    get: function (k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* gizli sekme */ } },
+  };
+
+  $('dateLabel').textContent = now.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', weekday: 'long' });
+  $('storeBtn').href = STORE;
+
+  // ---- Cevap kontrolü (uygulamadaki utils/answerMatch.js ile aynı) ----
+  var normalize = function (txt) {
+    return String(txt == null ? '' : txt).normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .toLowerCase().replace(/ı/g, 'i').trim().replace(/\s+/g, ' ').replace(/[.,!?;:'"()\[\]{}]/g, '');
+  };
+  var withinOneEdit = function (a, b) {
+    if (a === b) return true;
+    var la = a.length, lb = b.length;
+    if (Math.abs(la - lb) > 1) return false;
+    var i = 0;
+    while (i < la && i < lb && a[i] === b[i]) i += 1;
+    if (la === lb) {
+      if (a.slice(i + 1) === b.slice(i + 1)) return true;
+      return a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2);
+    }
+    return la > lb ? a.slice(i + 1) === b.slice(i) : a.slice(i) === b.slice(i + 1);
+  };
+  var matchAnswer = function (given, answers) {
+    var g = normalize(given);
+    if (!g) return null;
+    var close = null;
+    for (var i = 0; i < answers.length; i += 1) {
+      var e = normalize(answers[i]);
+      if (!e) continue;
+      if (e === g) return { type: 'exact', answer: String(answers[i]).trim() };
+      if (!close && e.length >= 6 && g[0] === e[0] && withinOneEdit(e, g)) close = { type: 'close', answer: String(answers[i]).trim() };
+    }
+    return close;
+  };
+
+  // ---- Durum ----
+  var data = null;      // { questions, special }
+  var letters = [];     // [{ key, letter, q }]
+  var st = null;        // { status, idx, timeLeft, score, results: {key: 'ok'|'bad'|'pass'}, answers: {key: text}, startedAt }
+  var timerId = null;
+
+  var save = function () { store.set(STATE_KEY, st); };
+
+  var specialHtml = function (sp) {
+    if (!sp) return '';
+    var box = document.createElement('div');
+    box.className = 'special';
+    var e = document.createElement('div'); e.className = 'e'; e.textContent = sp.emoji || '🎉';
+    var t = document.createElement('div');
+    var b = document.createElement('b'); b.textContent = sp.title || '';
+    var s = document.createElement('span'); s.textContent = sp.subtitle || '';
+    t.appendChild(b); t.appendChild(s); box.appendChild(e); box.appendChild(t);
+    return box;
+  };
+
+  var show = function (id) {
+    ['loading', 'intro', 'game', 'result', 'errorBox'].forEach(function (x) { $(x).classList.toggle('hidden', x !== id); });
+  };
+
+  // Web serisi: art arda günlerde oynanırsa artar
+  var streakText = function () {
+    var s = store.get(STREAK_KEY);
+    if (!s || !s.count) return '';
+    var y = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    var yKey = y.getFullYear() + '-' + pad(y.getMonth() + 1) + '-' + pad(y.getDate());
+    if (s.last !== DAY && s.last !== yKey) return '';
+    return '🔥 ' + s.count + ' günlük seri';
+  };
+  var bumpStreak = function () {
+    var s = store.get(STREAK_KEY) || { count: 0, last: null };
+    if (s.last === DAY) return;
+    var y = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1);
+    var yKey = y.getFullYear() + '-' + pad(y.getMonth() + 1) + '-' + pad(y.getDate());
+    store.set(STREAK_KEY, { count: s.last === yKey ? s.count + 1 : 1, last: DAY });
+  };
+
+  var buildLetters = function (questions) {
+    var byKey = {};
+    questions.forEach(function (q) {
+      var L = String(q.letter || '').toLocaleUpperCase('tr-TR');
+      var key = GROUP[L] || L;
+      if (!byKey[key]) byKey[key] = { key: key, letter: L, q: q };
+    });
+    return ORDER.filter(function (k) { return byKey[k]; }).map(function (k) { return byKey[k]; });
+  };
+
+  // ---- Oyun ----
+  var renderRing = function () {
+    var ring = $('ring');
+    Array.prototype.slice.call(ring.querySelectorAll('.dot')).forEach(function (d) { d.remove(); });
+    var n = letters.length;
+    letters.forEach(function (item, i) {
+      var a = (i / n) * 2 * Math.PI - Math.PI / 2;
+      var d = document.createElement('div');
+      var res = st.results[item.key];
+      d.className = 'dot' + (res ? ' ' + res : '') + (i === st.idx && st.status === 'playing' ? ' cur' : '');
+      d.style.left = (50 + 44 * Math.cos(a)) + '%';
+      d.style.top = (50 + 44 * Math.sin(a)) + '%';
+      d.textContent = item.letter;
+      ring.appendChild(d);
+    });
+  };
+
+  var resolvedCount = function () {
+    return letters.filter(function (l) { var r = st.results[l.key]; return r === 'ok' || r === 'bad'; }).length;
+  };
+
+  var renderQuestion = function () {
+    var item = letters[st.idx];
+    $('bigLetter').textContent = item.letter;
+    $('qhint').textContent = item.letter + ' ile başlar';
+    $('qtext').textContent = item.q.question_text;
+    $('scoreSmall').textContent = st.score + ' puan';
+    $('progress').textContent = resolvedCount() + '/' + letters.length;
+    $('answer').value = '';
+    renderRing();
+  };
+
+  var renderTimer = function () {
+    var t = Math.max(0, st.timeLeft);
+    $('timer').textContent = Math.floor(t / 60) + ':' + pad(t % 60);
+    $('timer').classList.toggle('warn', t <= 30);
+  };
+
+  var flash = function (text, cls) {
+    var f = $('flash');
+    f.className = 'flash ' + cls;
+    f.textContent = text;
+    clearTimeout(flash.t);
+    flash.t = setTimeout(function () { f.textContent = ''; }, 1800);
+  };
+
+  // Sıradaki çözülmemiş harf (doğru/yanlış olmayan; pas geçilenler sırası gelince tekrar)
+  var nextIndex = function (from) {
+    for (var step = 1; step <= letters.length; step += 1) {
+      var i = (from + step) % letters.length;
+      var r = st.results[letters[i].key];
+      if (r !== 'ok' && r !== 'bad') return i;
+    }
+    return -1;
+  };
+
+  var advance = function () {
+    if (resolvedCount() >= letters.length) return finish();
+    var next = nextIndex(st.idx);
+    if (next < 0) return finish();
+    st.idx = next;
+    save();
+    renderQuestion();
+    $('answer').focus();
+  };
+
+  var submit = function (e) {
+    if (e) e.preventDefault();
+    if (st.status !== 'playing') return;
+    var text = $('answer').value.trim();
+    if (!text) { $('answer').focus(); return; }
+    var item = letters[st.idx];
+    st.answers[item.key] = text;
+    var m = matchAnswer(text, item.q.answers || []);
+    if (m) {
+      var gained = m.type === 'close' ? 7 : 10;
+      st.score += gained;
+      st.results[item.key] = 'ok';
+      flash(m.type === 'close' ? 'Neredeyse! Doğrusu: ' + m.answer + ' · +' + gained : 'Doğru! +10', m.type === 'close' ? 'close' : 'ok');
+    } else {
+      st.score -= 5;
+      st.results[item.key] = 'bad';
+      flash('Yanlış · doğrusu: ' + (item.q.answers || [''])[0], 'bad');
+    }
+    advance();
+  };
+
+  var pass = function () {
+    if (st.status !== 'playing') return;
+    st.results[letters[st.idx].key] = 'pass';
+    flash('Pas geçildi, sonra tekrar gelecek', 'close');
+    advance();
+  };
+
+  var tick = function () {
+    st.timeLeft -= 1;
+    renderTimer();
+    if (st.timeLeft % 5 === 0) save();
+    if (st.timeLeft <= 0) finish();
+  };
+
+  var startTimer = function () {
+    clearInterval(timerId);
+    timerId = setInterval(tick, 1000);
+  };
+
+  var start = function () {
+    st = { status: 'playing', idx: 0, timeLeft: DURATION, score: 0, results: {}, answers: {}, startedAt: Date.now() };
+    save();
+    show('game');
+    renderQuestion();
+    renderTimer();
+    startTimer();
+    $('answer').focus();
+  };
+
+  var resume = function () {
+    // Sayfa kapatılıp açıldıysa geçen süre düşülür (yenileyerek süre kazanılmasın)
+    if (st.pausedAt) st.timeLeft -= Math.round((Date.now() - st.pausedAt) / 1000);
+    delete st.pausedAt;
+    if (st.timeLeft <= 0) return finish();
+    show('game');
+    renderQuestion();
+    renderTimer();
+    startTimer();
+  };
+
+  var finish = function () {
+    clearInterval(timerId);
+    if (st.status !== 'done') {
+      st.status = 'done';
+      st.timeLeft = Math.max(0, st.timeLeft);
+      st.finishedAt = Date.now();
+      bumpStreak();
+      save();
+    }
+    renderResult();
+  };
+
+  // ---- Sonuç ----
+  var correctCount = function () { return letters.filter(function (l) { return st.results[l.key] === 'ok'; }).length; };
+
+  var shareText = function () {
+    var cells = letters.map(function (l) {
+      var r = st.results[l.key];
+      return r === 'ok' ? '🟩' : r === 'bad' ? '🟥' : r === 'pass' ? '🟨' : '⬜';
+    });
+    var rows = [];
+    for (var i = 0; i < cells.length; i += 5) rows.push(cells.slice(i, i + 5).join(''));
+    var sp = data.special;
+    return [
+      (sp ? (sp.emoji || '🎉') + ' ' + sp.title : '🧠 Nedir Bilelim · Günün Bulmacası') + ' · ' + now.toLocaleDateString('tr-TR'),
+      correctCount() + '/' + letters.length + ' harf · ' + st.score + ' puan',
+      '',
+      rows.join('\n'),
+      '',
+      'Sen kaç bilirsin? ' + PAGE_URL,
+    ].join('\n');
+  };
+
+  var renderResult = function () {
+    show('result');
+    var sp = specialHtml(data.special);
+    $('specialResult').innerHTML = '';
+    if (sp) $('specialResult').appendChild(sp);
+    $('resultStreak').textContent = streakText();
+    $('resultScore').textContent = st.score;
+    $('resultSub').textContent = 'puan · ' + correctCount() + '/' + letters.length + ' harf';
+    var grid = $('resultGrid');
+    grid.innerHTML = '';
+    letters.forEach(function (l) {
+      var c = document.createElement('div');
+      var r = st.results[l.key];
+      c.className = 'cell' + (r ? ' ' + r : '');
+      c.textContent = l.letter;
+      grid.appendChild(c);
+    });
+    var review = $('review');
+    review.innerHTML = '';
+    letters.forEach(function (l) {
+      var row = document.createElement('div');
+      row.className = 'rev';
+      var a = document.createElement('span'); a.className = 'l'; a.textContent = l.letter;
+      var q = document.createTextNode(l.q.question_text + ' → ');
+      var ans = document.createElement('span'); ans.className = 'a'; ans.textContent = (l.q.answers || []).join(', ');
+      row.appendChild(a); row.appendChild(q); row.appendChild(ans);
+      if (st.answers[l.key] && st.results[l.key] !== 'ok') {
+        var y = document.createElement('span'); y.className = 'y'; y.textContent = ' (senin cevabın: ' + st.answers[l.key] + ')';
+        row.appendChild(y);
+      }
+      review.appendChild(row);
+    });
+    var updateCountdown = function () {
+      var t = new Date(); var next = new Date(t.getFullYear(), t.getMonth(), t.getDate() + 1);
+      var ms = next - t; var h = Math.floor(ms / 3600000); var m = Math.floor((ms % 3600000) / 60000);
+      $('countdown').textContent = 'Yeni bulmacaya ' + h + ' sa ' + m + ' dk';
+    };
+    updateCountdown();
+    setInterval(updateCountdown, 30000);
+  };
+
+  $('shareBtn').addEventListener('click', function () {
+    var text = shareText();
+    if (navigator.share) {
+      navigator.share({ text: text }).catch(function () {});
+      return;
+    }
+    var done = function () {
+      $('shareBtn').textContent = 'Panoya kopyalandı ✓';
+      setTimeout(function () { $('shareBtn').textContent = 'Sonucu Paylaş'; }, 2000);
+    };
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () { prompt('Kopyala:', text); });
+    else prompt('Kopyala:', text);
+  });
+
+  $('answerForm').addEventListener('submit', submit);
+  $('passBtn').addEventListener('click', pass);
+  $('startBtn').addEventListener('click', start);
+
+  // Sekme kapanır/arka plana giderse süre kaydedilir
+  var pause = function () {
+    if (st && st.status === 'playing') { st.pausedAt = Date.now(); save(); }
+  };
+  window.addEventListener('pagehide', pause);
+  document.addEventListener('visibilitychange', function () {
+    if (!st || st.status !== 'playing') return;
+    if (document.hidden) { clearInterval(timerId); pause(); }
+    else { resume(); }
+  });
+
+  var fail = function (text) {
+    $('errorText').textContent = text;
+    show('errorBox');
+  };
+
+  fetch(API + '?day=' + DAY)
+    .then(function (r) {
+      if (r.status === 425) throw new Error('Bugünün bulmacası birkaç dakika içinde açılacak. Biraz sonra tekrar dene.');
+      if (!r.ok) throw new Error('Bulmaca şu an yüklenemedi. Biraz sonra tekrar dene.');
+      return r.json();
+    })
+    .then(function (json) {
+      data = json;
+      letters = buildLetters(json.questions || []);
+      if (letters.length < 10) throw new Error('Bugünün bulmacası hazır değil.');
+      var sp = specialHtml(json.special);
+      if (sp) $('specialIntro').appendChild(sp);
+      if (json.special) document.title = (json.special.emoji || '') + ' ' + json.special.title + ' — Nedir Bilelim';
+      $('introStreak').textContent = streakText();
+      st = store.get(STATE_KEY);
+      if (st && st.status === 'done') return renderResult();
+      if (st && st.status === 'playing') return resume();
+      st = null;
+      show('intro');
+    })
+    .catch(function (err) { fail(err.message || 'Bulmaca yüklenemedi.'); });
+})();
+</script>
+</body>
+</html>
